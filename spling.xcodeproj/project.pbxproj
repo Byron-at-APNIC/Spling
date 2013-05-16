@@ -1,0 +1,452 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		30BCEDE71744669400434D91 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE61744669400434D91 /* Cocoa.framework */; };
+		30BCEDF11744669400434D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30BCEDEF1744669400434D91 /* InfoPlist.strings */; };
+		30BCEDF51744669400434D91 /* spling.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BCEDF41744669400434D91 /* spling.m */; };
+		30BCEDFD1744669500434D91 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDFC1744669500434D91 /* SenTestingKit.framework */; };
+		30BCEDFE1744669500434D91 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE61744669400434D91 /* Cocoa.framework */; };
+		30BCEE011744669500434D91 /* spling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE31744669400434D91 /* spling.framework */; };
+		30BCEE071744669500434D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30BCEE051744669500434D91 /* InfoPlist.strings */; };
+		30BCEE0A1744669500434D91 /* splingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BCEE091744669500434D91 /* splingTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		30BCEDFF1744669500434D91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30BCEDDA1744669400434D91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30BCEDE21744669400434D91;
+			remoteInfo = spling;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		30BCEDE31744669400434D91 /* spling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = spling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30BCEDE61744669400434D91 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		30BCEDE91744669400434D91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		30BCEDEA1744669400434D91 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		30BCEDEB1744669400434D91 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		30BCEDEE1744669400434D91 /* spling-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "spling-Info.plist"; sourceTree = "<group>"; };
+		30BCEDF01744669400434D91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		30BCEDF21744669400434D91 /* spling-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spling-Prefix.pch"; sourceTree = "<group>"; };
+		30BCEDF31744669400434D91 /* spling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spling.h; sourceTree = "<group>"; };
+		30BCEDF41744669400434D91 /* spling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = spling.m; sourceTree = "<group>"; };
+		30BCEDFB1744669500434D91 /* splingTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = splingTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		30BCEDFC1744669500434D91 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		30BCEE041744669500434D91 /* splingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "splingTests-Info.plist"; sourceTree = "<group>"; };
+		30BCEE061744669500434D91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		30BCEE081744669500434D91 /* splingTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = splingTests.h; sourceTree = "<group>"; };
+		30BCEE091744669500434D91 /* splingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = splingTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		30BCEDDF1744669400434D91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30BCEDE71744669400434D91 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30BCEDF71744669500434D91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30BCEDFD1744669500434D91 /* SenTestingKit.framework in Frameworks */,
+				30BCEDFE1744669500434D91 /* Cocoa.framework in Frameworks */,
+				30BCEE011744669500434D91 /* spling.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		30BCEDD91744669400434D91 = {
+			isa = PBXGroup;
+			children = (
+				30BCEDEC1744669400434D91 /* spling */,
+				30BCEE021744669500434D91 /* splingTests */,
+				30BCEDE51744669400434D91 /* Frameworks */,
+				30BCEDE41744669400434D91 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		30BCEDE41744669400434D91 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30BCEDE31744669400434D91 /* spling.framework */,
+				30BCEDFB1744669500434D91 /* splingTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		30BCEDE51744669400434D91 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				30BCEDE61744669400434D91 /* Cocoa.framework */,
+				30BCEDFC1744669500434D91 /* SenTestingKit.framework */,
+				30BCEDE81744669400434D91 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		30BCEDE81744669400434D91 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				30BCEDE91744669400434D91 /* AppKit.framework */,
+				30BCEDEA1744669400434D91 /* CoreData.framework */,
+				30BCEDEB1744669400434D91 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		30BCEDEC1744669400434D91 /* spling */ = {
+			isa = PBXGroup;
+			children = (
+				30BCEDF31744669400434D91 /* spling.h */,
+				30BCEDF41744669400434D91 /* spling.m */,
+				30BCEDED1744669400434D91 /* Supporting Files */,
+			);
+			path = spling;
+			sourceTree = "<group>";
+		};
+		30BCEDED1744669400434D91 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				30BCEDEE1744669400434D91 /* spling-Info.plist */,
+				30BCEDEF1744669400434D91 /* InfoPlist.strings */,
+				30BCEDF21744669400434D91 /* spling-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		30BCEE021744669500434D91 /* splingTests */ = {
+			isa = PBXGroup;
+			children = (
+				30BCEE081744669500434D91 /* splingTests.h */,
+				30BCEE091744669500434D91 /* splingTests.m */,
+				30BCEE031744669500434D91 /* Supporting Files */,
+			);
+			path = splingTests;
+			sourceTree = "<group>";
+		};
+		30BCEE031744669500434D91 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				30BCEE041744669500434D91 /* splingTests-Info.plist */,
+				30BCEE051744669500434D91 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		30BCEDE01744669400434D91 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		30BCEDE21744669400434D91 /* spling */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30BCEE0D1744669500434D91 /* Build configuration list for PBXNativeTarget "spling" */;
+			buildPhases = (
+				30BCEDDE1744669400434D91 /* Sources */,
+				30BCEDDF1744669400434D91 /* Frameworks */,
+				30BCEDE01744669400434D91 /* Headers */,
+				30BCEDE11744669400434D91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = spling;
+			productName = spling;
+			productReference = 30BCEDE31744669400434D91 /* spling.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		30BCEDFA1744669500434D91 /* splingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30BCEE101744669500434D91 /* Build configuration list for PBXNativeTarget "splingTests" */;
+			buildPhases = (
+				30BCEDF61744669500434D91 /* Sources */,
+				30BCEDF71744669500434D91 /* Frameworks */,
+				30BCEDF81744669500434D91 /* Resources */,
+				30BCEDF91744669500434D91 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30BCEE001744669500434D91 /* PBXTargetDependency */,
+			);
+			name = splingTests;
+			productName = splingTests;
+			productReference = 30BCEDFB1744669500434D91 /* splingTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		30BCEDDA1744669400434D91 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "The Wanderers";
+			};
+			buildConfigurationList = 30BCEDDD1744669400434D91 /* Build configuration list for PBXProject "spling" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 30BCEDD91744669400434D91;
+			productRefGroup = 30BCEDE41744669400434D91 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				30BCEDE21744669400434D91 /* spling */,
+				30BCEDFA1744669500434D91 /* splingTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30BCEDE11744669400434D91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30BCEDF11744669400434D91 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30BCEDF81744669500434D91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30BCEE071744669500434D91 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		30BCEDF91744669500434D91 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		30BCEDDE1744669400434D91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30BCEDF51744669400434D91 /* spling.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30BCEDF61744669500434D91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30BCEE0A1744669500434D91 /* splingTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		30BCEE001744669500434D91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30BCEDE21744669400434D91 /* spling */;
+			targetProxy = 30BCEDFF1744669500434D91 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		30BCEDEF1744669400434D91 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30BCEDF01744669400434D91 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		30BCEE051744669500434D91 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30BCEE061744669500434D91 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		30BCEE0B1744669500434D91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		30BCEE0C1744669500434D91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		30BCEE0E1744669500434D91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "spling/spling-Prefix.pch";
+				INFOPLIST_FILE = "spling/spling-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		30BCEE0F1744669500434D91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "spling/spling-Prefix.pch";
+				INFOPLIST_FILE = "spling/spling-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		30BCEE111744669500434D91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "spling/spling-Prefix.pch";
+				INFOPLIST_FILE = "splingTests/splingTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		30BCEE121744669500434D91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "spling/spling-Prefix.pch";
+				INFOPLIST_FILE = "splingTests/splingTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30BCEDDD1744669400434D91 /* Build configuration list for PBXProject "spling" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30BCEE0B1744669500434D91 /* Debug */,
+				30BCEE0C1744669500434D91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30BCEE0D1744669500434D91 /* Build configuration list for PBXNativeTarget "spling" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30BCEE0E1744669500434D91 /* Debug */,
+				30BCEE0F1744669500434D91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		30BCEE101744669500434D91 /* Build configuration list for PBXNativeTarget "splingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30BCEE111744669500434D91 /* Debug */,
+				30BCEE121744669500434D91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 30BCEDDA1744669400434D91 /* Project object */;
+}
