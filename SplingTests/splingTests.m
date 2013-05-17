@@ -1,19 +1,19 @@
 //
-//  splingTests.m
-//  splingTests
+//  SplingTests.m
+//  SplingTests
 //
 //  Created by Byron Ellacott on 16/05/13.
 //  Copyright (c) 2013 The Wanderers. All rights reserved.
 //
 
-#import "splingTests.h"
+#import "SplingTests.h"
 
 #import <objc/runtime.h>
 
 #import "SplingContext.h"
 #import "Component.h"
 
-@interface splingTests () {
+@interface SplingTests () {
     Class baseClass;
     Class testComponentClass;
     BOOL initialised;
@@ -21,20 +21,20 @@
 
 @end
 
-@implementation splingTests
+@implementation SplingTests
 
 - (void)setUp
 {
     [super setUp];
     
     // Only do the remaining setup once!
-    if (objc_lookUpClass("splingTestsBase") != nil) return;
+    if (objc_lookUpClass("SplingTestsBase") != nil) return;
     
-    baseClass = objc_allocateClassPair([NSObject class], "splingTestsBase", 0);
+    baseClass = objc_allocateClassPair([NSObject class], "SplingTestsBase", 0);
     assert(baseClass != NULL);
     objc_registerClassPair(baseClass);
     
-    testComponentClass = objc_allocateClassPair(baseClass, "splingTestsComponent", 0);
+    testComponentClass = objc_allocateClassPair(baseClass, "SplingTestsComponent", 0);
     assert(testComponentClass != NULL);
     assert(class_addProtocol(testComponentClass, @protocol(Component)));
     assert(class_addMethod(testComponentClass, @selector(init), imp_implementationWithBlock(^(id _self) {
