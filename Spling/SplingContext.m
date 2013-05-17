@@ -15,7 +15,11 @@
 
 @interface SplingContext ()
 
+@property (nonatomic) NSMutableDictionary *beans;
 @property (nonatomic) Class baseClass;
+
+- (void)loadAllBeans;
+- (void)autowireAllBeans;
 
 @end
 
@@ -30,12 +34,67 @@
 {
     if ((self = [super init]) != nil) {
         self.baseClass = base;
-
-        // TODO: construct a dependency graph
-        // TODO: instantiate all singleton components through the dependency graph
+        
+        self.beans = [NSMutableDictionary dictionaryWithCapacity:5];
+        
+        // Load all <Component> classes beneath base
+        [self loadAllBeans];
+        
+        // Autowire all loaded beans with dependencies - may throw an exception
+        [self autowireAllBeans];
     }
 
     return self;
+}
+
+- (void)loadAllBeans
+{
+    int classCount = objc_getClassList(NULL, 0);
+    
+    if (classCount > 0) {
+        Class *classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * classCount);
+        classCount = objc_getClassList(classes, classCount);
+        for (int i = 0; i < classCount; i++) {
+            if (class_conformsToProtocol(classes[i], @protocol(Component))) {
+                for (Class tester = classes[i]; tester; tester = class_getSuperclass(tester)) {
+                    if (tester == self.baseClass) {
+                        NSString *className = [NSString stringWithUTF8String:class_getName(classes[i])];
+                        
+                        // Sanity check: each class should only exist once!
+                        if ([self.beans valueForKey:className] != nil) {
+                            @throw [NSException exceptionWithName:@"Ambiguious bean definition"
+                                                           reason:[NSString stringWithFormat:@"Class name %@ used twice", className]
+                                                         userInfo:nil];
+                        }
+
+                        // TODO: factory initialisers?
+                        [self.beans setValue:[[classes[i] alloc] init] forKey:className];
+                    }
+                }
+            }
+        }
+        free(classes);
+    }
+}
+
+- (void)autowireAllBeans
+{
+    [self.beans enumerateKeysAndObjectsUsingBlock:^(id key, NSObject *obj, BOOL *stop) {
+        if ([[obj class] respondsToSelector:@selector(autowiredProperties)]) {
+            NSDictionary *autowired = [[obj class] autowiredProperties];
+            [autowired enumerateKeysAndObjectsUsingBlock:^(id key, id class, BOOL *stop) {
+                // TODO: watch out for circular dependencies
+                id bean = [self getBeanWithClass:class error:nil];
+                if (!bean) {
+                    @throw [NSException exceptionWithName:@"Cannot resolve dependency"
+                                                   reason:[NSString stringWithFormat:@"Bean %@, dependency %s",
+                                                           [obj className], class_getName(class)]
+                                                 userInfo:nil];
+                }
+                [obj setValue:bean forKey:key];
+            }];
+        }
+    }];
 }
 
 - (id)getBeanWithClass:(Class)class error:(NSError **)error
