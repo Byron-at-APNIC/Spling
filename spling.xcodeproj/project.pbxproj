@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		30BCEDE71744669400434D91 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE61744669400434D91 /* Cocoa.framework */; };
 		30BCEDF11744669400434D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30BCEDEF1744669400434D91 /* InfoPlist.strings */; };
-		30BCEDF51744669400434D91 /* spling.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BCEDF41744669400434D91 /* spling.m */; };
 		30BCEDFD1744669500434D91 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDFC1744669500434D91 /* SenTestingKit.framework */; };
 		30BCEDFE1744669500434D91 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE61744669400434D91 /* Cocoa.framework */; };
 		30BCEE011744669500434D91 /* spling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE31744669400434D91 /* spling.framework */; };
 		30BCEE071744669500434D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30BCEE051744669500434D91 /* InfoPlist.strings */; };
 		30BCEE0A1744669500434D91 /* splingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BCEE091744669500434D91 /* splingTests.m */; };
+		30BCEE1717446B2700434D91 /* SplingContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 30BCEE1517446B2700434D91 /* SplingContext.h */; };
+		30BCEE1817446B2700434D91 /* SplingContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BCEE1617446B2700434D91 /* SplingContext.m */; };
+		30EC595C17447DFE00454A72 /* SplingContextTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EC595B17447DFE00454A72 /* SplingContextTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,14 +38,18 @@
 		30BCEDEE1744669400434D91 /* spling-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "spling-Info.plist"; sourceTree = "<group>"; };
 		30BCEDF01744669400434D91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30BCEDF21744669400434D91 /* spling-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spling-Prefix.pch"; sourceTree = "<group>"; };
-		30BCEDF31744669400434D91 /* spling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spling.h; sourceTree = "<group>"; };
-		30BCEDF41744669400434D91 /* spling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = spling.m; sourceTree = "<group>"; };
 		30BCEDFB1744669500434D91 /* splingTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = splingTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BCEDFC1744669500434D91 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		30BCEE041744669500434D91 /* splingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "splingTests-Info.plist"; sourceTree = "<group>"; };
 		30BCEE061744669500434D91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30BCEE081744669500434D91 /* splingTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = splingTests.h; sourceTree = "<group>"; };
 		30BCEE091744669500434D91 /* splingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = splingTests.m; sourceTree = "<group>"; };
+		30BCEE13174466BF00434D91 /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
+		30BCEE14174467B500434D91 /* BeanFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeanFactory.h; sourceTree = "<group>"; };
+		30BCEE1517446B2700434D91 /* SplingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplingContext.h; sourceTree = "<group>"; };
+		30BCEE1617446B2700434D91 /* SplingContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplingContext.m; sourceTree = "<group>"; };
+		30EC595A17447DFE00454A72 /* SplingContextTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplingContextTests.h; sourceTree = "<group>"; };
+		30EC595B17447DFE00454A72 /* SplingContextTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplingContextTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +116,10 @@
 		30BCEDEC1744669400434D91 /* spling */ = {
 			isa = PBXGroup;
 			children = (
-				30BCEDF31744669400434D91 /* spling.h */,
-				30BCEDF41744669400434D91 /* spling.m */,
+				30BCEE13174466BF00434D91 /* Component.h */,
+				30BCEE14174467B500434D91 /* BeanFactory.h */,
+				30BCEE1517446B2700434D91 /* SplingContext.h */,
+				30BCEE1617446B2700434D91 /* SplingContext.m */,
 				30BCEDED1744669400434D91 /* Supporting Files */,
 			);
 			path = spling;
@@ -132,6 +140,8 @@
 			children = (
 				30BCEE081744669500434D91 /* splingTests.h */,
 				30BCEE091744669500434D91 /* splingTests.m */,
+				30EC595A17447DFE00454A72 /* SplingContextTests.h */,
+				30EC595B17447DFE00454A72 /* SplingContextTests.m */,
 				30BCEE031744669500434D91 /* Supporting Files */,
 			);
 			path = splingTests;
@@ -153,6 +163,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30BCEE1717446B2700434D91 /* SplingContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30BCEDF51744669400434D91 /* spling.m in Sources */,
+				30BCEE1817446B2700434D91 /* SplingContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30BCEE0A1744669500434D91 /* splingTests.m in Sources */,
+				30EC595C17447DFE00454A72 /* SplingContextTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +377,7 @@
 		30BCEE0E1744669500434D91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -373,6 +386,7 @@
 				GCC_PREFIX_HEADER = "spling/spling-Prefix.pch";
 				INFOPLIST_FILE = "spling/spling-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -380,6 +394,7 @@
 		30BCEE0F1744669500434D91 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -388,6 +403,7 @@
 				GCC_PREFIX_HEADER = "spling/spling-Prefix.pch";
 				INFOPLIST_FILE = "spling/spling-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -437,6 +453,7 @@
 				30BCEE0F1744669500434D91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		30BCEE101744669500434D91 /* Build configuration list for PBXNativeTarget "splingTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +462,7 @@
 				30BCEE121744669500434D91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol Component <NSObject>
+@protocol Component
+
+@optional
++ (NSDictionary *)autowiredProperties;
 
 @end
