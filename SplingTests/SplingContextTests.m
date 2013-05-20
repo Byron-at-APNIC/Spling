@@ -14,6 +14,18 @@
 #import "SplingContextImpl.h"
 #import "Component.h"
 
+@interface SplingContextTestsCircularBase : NSObject @end @implementation SplingContextTestsCircularBase @end
+@interface SplingContextTestsHead : SplingContextTestsCircularBase <Component> @property (strong) id tail; @end
+@interface SplingContextTestsTail : SplingContextTestsCircularBase <Component> @property (strong) id head; @end
+
+@implementation SplingContextTestsHead
++ (id)autowiredProperties {return @{@"tail": [SplingContextTestsTail class]};}
+@end
+@implementation SplingContextTestsTail
++ (id)autowiredProperties {return @{@"head": [SplingContextTestsHead class]};}
+@end
+
+
 @interface SplingContextTests () {
     Class baseClass;
     Class firstComponentClass;
@@ -164,5 +176,17 @@
     STAssertNotNil(subbean, @"Got an autowired subbean");
     STAssertTrue([subbean isKindOfClass:firstComponentClass], @"subbean is the right component");
 }
+
+- (void)testCircularity
+{
+    SplingContextImpl *context = [[SplingContextImpl alloc] initWithBaseClass:[SplingContextTestsCircularBase class]];
+    STAssertNotNil(context, @"Created a SplingContext");
+    
+    NSError *error = nil;
+    NSObject *bean = [context getBeanWithClass:[SplingContextTestsHead class] error:&error];
+    STAssertNotNil(bean, @"Bean should exist");
+    STAssertEquals([[bean valueForKey:@"tail"] valueForKey:@"head"], bean, @"Bean's tail's head is the bean itself");
+}
+
 
 @end

@@ -15,7 +15,14 @@
 
 @interface SplingContextImpl ()
 
+@property (nonatomic) NSMutableDictionary *beans;
 @property (nonatomic) Class baseClass;
+@property (nonatomic) NSMutableDictionary *classMap;
+@property (nonatomic) NSMutableDictionary *protocolMap;
+
+- (void)loadAllBeans;
+- (void)autowireAllBeans;
+- (void)updateMapsWithBean:(NSObject *)bean;
 
 @end
 
@@ -30,72 +37,132 @@
 {
     if ((self = [super init]) != nil) {
         self.baseClass = base;
-
-        // TODO: construct a dependency graph
-        // TODO: instantiate all singleton components through the dependency graph
+        
+        self.beans = [NSMutableDictionary dictionaryWithCapacity:5];
+        self.classMap = [NSMutableDictionary dictionaryWithCapacity:5];
+        self.protocolMap = [NSMutableDictionary dictionaryWithCapacity:5];
+        
+        // Load all <Component> classes beneath base
+        [self loadAllBeans];
+        
+        // Autowire all loaded beans with dependencies - may throw an exception
+        [self autowireAllBeans];
     }
 
     return self;
 }
 
-- (id)getBeanWithClass:(Class)class error:(NSError **)error
+- (void)loadAllBeans
 {
-    // TODO: return the already instantiated singleton (or call the factory method when factory methods are introduced)
-    Class *classes = NULL;
-    int classCount = 0;
-    id obj = nil;
-    
-    classCount = objc_getClassList(NULL, 0);
-    
-    if (error) *error = nil;
+    int classCount = objc_getClassList(NULL, 0);
     
     if (classCount > 0) {
-        classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * classCount);
+        Class *classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * classCount);
         classCount = objc_getClassList(classes, classCount);
         for (int i = 0; i < classCount; i++) {
             if (class_conformsToProtocol(classes[i], @protocol(Component))) {
-                BOOL matchesClass = NO;
-                BOOL matchesBase = NO;
                 for (Class tester = classes[i]; tester; tester = class_getSuperclass(tester)) {
-                    if (tester == class) matchesClass = YES;
-                    if (tester == self.baseClass) matchesBase = YES;
-                }
-                
-                if (matchesClass && matchesBase) {
-                    if (obj != nil) {
-                        // Ambiguous beans are an error condition
-                        if (error) {
-                            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling"
-                                                            code:CONTEXT_ERROR_AMBIGUOUS userInfo:nil];
+                    if (tester == self.baseClass) {
+                        NSString *className = [NSString stringWithUTF8String:class_getName(classes[i])];
+                        
+                        // Sanity check: each class should only exist once!
+                        if ([self.beans valueForKey:className] != nil) {
+                            @throw [NSException exceptionWithName:@"Ambiguious bean definition"
+                                                           reason:[NSString stringWithFormat:@"Class name %@ used twice", className]
+                                                         userInfo:nil];
                         }
-                        obj = nil;
-                        break;
+
+                        // TODO: factory initialisers?
+                        [self.beans setValue:[[classes[i] alloc] init] forKey:className];
+                        
+                        [self updateMapsWithBean:self.beans[className]];
                     }
-                    obj = [[classes[i] alloc] init];
                 }
             }
         }
         free(classes);
     }
-    
-    if (obj == nil && error != nil && *error == nil) {
-        *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_UNKNOWN userInfo:nil];
+}
+
+- (void)updateMapsWithBean:(NSObject *)bean
+{
+    for (Class class = [bean class]; class; class = class_getSuperclass(class)) {
+        // Update beans by class name
+        NSMutableArray *beans = [self.classMap valueForKey:NSStringFromClass(class)];
+        if (!beans) beans = [NSMutableArray arrayWithCapacity:1];
+        [beans addObject:bean];
+        [self.classMap setValue:beans forKey:NSStringFromClass(class)];
+        
+        // Update beans by protocol
+        Protocol * __unsafe_unretained *protocols = class_copyProtocolList(class, NULL);
+        for (Protocol * __unsafe_unretained *proto = protocols; proto && *proto; proto++) {
+            beans = [self.protocolMap valueForKey:NSStringFromProtocol(*proto)];
+            if (!beans) beans = [NSMutableArray arrayWithCapacity:1];
+            [beans addObject:bean];
+            [self.protocolMap setValue:beans forKey:NSStringFromProtocol(*proto)];
+        }
+        free(protocols);
+
+        // Stop iterating superclasses at the base class
+        if (class == self.baseClass) break;
+    }
+}
+
+- (void)autowireAllBeans
+{
+    [self.beans enumerateKeysAndObjectsUsingBlock:^(id key, NSObject *obj, BOOL *stop) {
+        if ([[obj class] respondsToSelector:@selector(autowiredProperties)]) {
+            NSDictionary *autowired = [[obj class] autowiredProperties];
+            [autowired enumerateKeysAndObjectsUsingBlock:^(id key, id class, BOOL *stop) {
+                id bean = [self getBeanWithClass:class error:nil];
+                if (!bean) {
+                    @throw [NSException exceptionWithName:@"Cannot resolve dependency"
+                                                   reason:[NSString stringWithFormat:@"Bean %@, dependency %s",
+                                                           [obj className], class_getName(class)]
+                                                 userInfo:nil];
+                }
+                [obj setValue:bean forKey:key];
+            }];
+        }
+    }];
+}
+
+- (id)getBeanWithClass:(Class)class error:(NSError **)error
+{
+    NSArray *beans = self.classMap[NSStringFromClass(class)];
+    if (!beans) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_UNKNOWN userInfo:nil];
+        }
+        return nil;
+    }
+    if (beans.count > 1) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_AMBIGUOUS userInfo:nil];
+        }
+        return nil;
     }
     
-    // Autowire the object's dependencies
-    if (obj && [[obj class] respondsToSelector:@selector(autowiredProperties)]) {
-        NSDictionary *autowired = [[obj class] autowiredProperties];
-        __block BOOL errors = NO;
-        [autowired enumerateKeysAndObjectsUsingBlock:^(id key, id class, BOOL *stop) {
-            // TODO: watch out for circular dependencies
-            id bean = [self getBeanWithClass:class error:error];
-            if (!bean) errors = *stop = YES;
-            [obj setValue:bean forKey:key];
-        }];
-        if (errors) obj = nil;
+    return beans[0];
+}
+
+- (id)getBeanWithProtocol:(Protocol *)proto error:(NSError *__autoreleasing *)error
+{
+    NSArray *beans = self.protocolMap[NSStringFromProtocol(proto)];
+    if (!beans) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_UNKNOWN userInfo:nil];
+        }
+        return nil;
+    }
+    if (beans.count > 1) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_AMBIGUOUS userInfo:nil];
+        }
+        return nil;
     }
 
-    return obj;
+    return beans[0];
 }
 
 @end

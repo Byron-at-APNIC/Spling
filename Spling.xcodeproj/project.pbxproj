@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3023489A1749CB94003737C3 /* SplingBeansByProtocolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 302348991749CB94003737C3 /* SplingBeansByProtocolTests.m */; };
 		30BCEDE71744669400434D91 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE61744669400434D91 /* Cocoa.framework */; };
 		30BCEDF11744669400434D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30BCEDEF1744669400434D91 /* InfoPlist.strings */; };
 		30BCEDFD1744669500434D91 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDFC1744669500434D91 /* SenTestingKit.framework */; };
@@ -31,6 +32,8 @@
 
 /* Begin PBXFileReference section */
 		30721123174714AE007481D1 /* SplingContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplingContext.h; sourceTree = "<group>"; };
+		302348981749CB94003737C3 /* SplingBeansByProtocolTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplingBeansByProtocolTests.h; sourceTree = "<group>"; };
+		302348991749CB94003737C3 /* SplingBeansByProtocolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplingBeansByProtocolTests.m; sourceTree = "<group>"; };
 		30BCEDE31744669400434D91 /* Spling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BCEDE61744669400434D91 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		30BCEDE91744669400434D91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -144,6 +147,8 @@
 				30BCEE091744669500434D91 /* SplingTests.m */,
 				30EC595A17447DFE00454A72 /* SplingContextTests.h */,
 				30EC595B17447DFE00454A72 /* SplingContextTests.m */,
+				302348981749CB94003737C3 /* SplingBeansByProtocolTests.h */,
+				302348991749CB94003737C3 /* SplingBeansByProtocolTests.m */,
 				30BCEE031744669500434D91 /* Supporting Files */,
 			);
 			path = SplingTests;
@@ -286,6 +291,7 @@
 			files = (
 				30BCEE0A1744669500434D91 /* SplingTests.m in Sources */,
 				30EC595C17447DFE00454A72 /* SplingContextTests.m in Sources */,
+				3023489A1749CB94003737C3 /* SplingBeansByProtocolTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

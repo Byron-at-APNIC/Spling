@@ -11,5 +11,6 @@
 @protocol BeanFactory <NSObject>
 
 - (id)getBeanWithClass:(Class)class error:(NSError **)error;
+- (id)getBeanWithProtocol:(Protocol *)proto error:(NSError **)error;
 
 @end
