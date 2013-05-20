@@ -17,9 +17,12 @@
 
 @property (nonatomic) NSMutableDictionary *beans;
 @property (nonatomic) Class baseClass;
+@property (nonatomic) NSMutableDictionary *classMap;
+@property (nonatomic) NSMutableDictionary *protocolMap;
 
 - (void)loadAllBeans;
 - (void)autowireAllBeans;
+- (void)updateMapsWithBean:(NSObject *)bean;
 
 @end
 
@@ -36,6 +39,8 @@
         self.baseClass = base;
         
         self.beans = [NSMutableDictionary dictionaryWithCapacity:5];
+        self.classMap = [NSMutableDictionary dictionaryWithCapacity:5];
+        self.protocolMap = [NSMutableDictionary dictionaryWithCapacity:5];
         
         // Load all <Component> classes beneath base
         [self loadAllBeans];
@@ -69,11 +74,37 @@
 
                         // TODO: factory initialisers?
                         [self.beans setValue:[[classes[i] alloc] init] forKey:className];
+                        
+                        [self updateMapsWithBean:self.beans[className]];
                     }
                 }
             }
         }
         free(classes);
+    }
+}
+
+- (void)updateMapsWithBean:(NSObject *)bean
+{
+    for (Class class = [bean class]; class; class = class_getSuperclass(class)) {
+        // Update beans by class name
+        NSMutableArray *beans = [self.classMap valueForKey:NSStringFromClass(class)];
+        if (!beans) beans = [NSMutableArray arrayWithCapacity:1];
+        [beans addObject:bean];
+        [self.classMap setValue:beans forKey:NSStringFromClass(class)];
+        
+        // Update beans by protocol
+        Protocol * __unsafe_unretained *protocols = class_copyProtocolList(class, NULL);
+        for (Protocol * __unsafe_unretained *proto = protocols; proto && *proto; proto++) {
+            beans = [self.protocolMap valueForKey:NSStringFromProtocol(*proto)];
+            if (!beans) beans = [NSMutableArray arrayWithCapacity:1];
+            [beans addObject:bean];
+            [self.protocolMap setValue:beans forKey:NSStringFromProtocol(*proto)];
+        }
+        free(protocols);
+
+        // Stop iterating superclasses at the base class
+        if (class == self.baseClass) break;
     }
 }
 
@@ -83,7 +114,6 @@
         if ([[obj class] respondsToSelector:@selector(autowiredProperties)]) {
             NSDictionary *autowired = [[obj class] autowiredProperties];
             [autowired enumerateKeysAndObjectsUsingBlock:^(id key, id class, BOOL *stop) {
-                // TODO: watch out for circular dependencies
                 id bean = [self getBeanWithClass:class error:nil];
                 if (!bean) {
                     @throw [NSException exceptionWithName:@"Cannot resolve dependency"
@@ -99,62 +129,40 @@
 
 - (id)getBeanWithClass:(Class)class error:(NSError **)error
 {
-    // TODO: return the already instantiated singleton (or call the factory method when factory methods are introduced)
-    Class *classes = NULL;
-    int classCount = 0;
-    id obj = nil;
-    
-    classCount = objc_getClassList(NULL, 0);
-    
-    if (error) *error = nil;
-    
-    if (classCount > 0) {
-        classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * classCount);
-        classCount = objc_getClassList(classes, classCount);
-        for (int i = 0; i < classCount; i++) {
-            if (class_conformsToProtocol(classes[i], @protocol(Component))) {
-                BOOL matchesClass = NO;
-                BOOL matchesBase = NO;
-                for (Class tester = classes[i]; tester; tester = class_getSuperclass(tester)) {
-                    if (tester == class) matchesClass = YES;
-                    if (tester == self.baseClass) matchesBase = YES;
-                }
-                
-                if (matchesClass && matchesBase) {
-                    if (obj != nil) {
-                        // Ambiguous beans are an error condition
-                        if (error) {
-                            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling"
-                                                            code:CONTEXT_ERROR_AMBIGUOUS userInfo:nil];
-                        }
-                        obj = nil;
-                        break;
-                    }
-                    obj = [[classes[i] alloc] init];
-                }
-            }
+    NSArray *beans = self.classMap[NSStringFromClass(class)];
+    if (!beans) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_UNKNOWN userInfo:nil];
         }
-        free(classes);
+        return nil;
+    }
+    if (beans.count > 1) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_AMBIGUOUS userInfo:nil];
+        }
+        return nil;
     }
     
-    if (obj == nil && error != nil && *error == nil) {
-        *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_UNKNOWN userInfo:nil];
+    return beans[0];
+}
+
+- (id)getBeanWithProtocol:(Protocol *)proto error:(NSError *__autoreleasing *)error
+{
+    NSArray *beans = self.protocolMap[NSStringFromProtocol(proto)];
+    if (!beans) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_UNKNOWN userInfo:nil];
+        }
+        return nil;
     }
-    
-    // Autowire the object's dependencies
-    if (obj && [[obj class] respondsToSelector:@selector(autowiredProperties)]) {
-        NSDictionary *autowired = [[obj class] autowiredProperties];
-        __block BOOL errors = NO;
-        [autowired enumerateKeysAndObjectsUsingBlock:^(id key, id class, BOOL *stop) {
-            // TODO: watch out for circular dependencies
-            id bean = [self getBeanWithClass:class error:error];
-            if (!bean) errors = *stop = YES;
-            [obj setValue:bean forKey:key];
-        }];
-        if (errors) obj = nil;
+    if (beans.count > 1) {
+        if (error != nil) {
+            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_AMBIGUOUS userInfo:nil];
+        }
+        return nil;
     }
 
-    return obj;
+    return beans[0];
 }
 
 @end
