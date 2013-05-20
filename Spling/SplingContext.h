@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BeanFactory.h"
 
-@protocol SplingContext <NSObject>
+@protocol SplingContext <NSObject, BeanFactory>
+
+- (id)init;
+- (id)initWithBaseClass:(Class)base;
 
 @end

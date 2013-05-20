@@ -1,25 +1,25 @@
 //
-//  SplingContext.m
+//  SplingContextImpl.m
 //  Spling
 //
 //  Created by Byron Ellacott on 16/05/13.
 //  Copyright (c) 2013 The Wanderers. All rights reserved.
 //
 
-#import "SplingContext.h"
+#import "SplingContextImpl.h"
 
 #import <Foundation/NSObjCRuntime.h>
 #import <objc/runtime.h>
 
 #import "Component.h"
 
-@interface SplingContext ()
+@interface SplingContextImpl ()
 
 @property (nonatomic) Class baseClass;
 
 @end
 
-@implementation SplingContext
+@implementation SplingContextImpl
 
 - (id)init
 {

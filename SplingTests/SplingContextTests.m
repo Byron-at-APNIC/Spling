@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 
 #import "SplingContext.h"
+#import "SplingContextImpl.h"
 #import "Component.h"
 
 @interface SplingContextTests () {
@@ -115,7 +116,7 @@
 
 - (void)testAmbiguity
 {
-    SplingContext *context = [[SplingContext alloc] initWithBaseClass:baseClass];
+    SplingContextImpl *context = [[SplingContextImpl alloc] initWithBaseClass:baseClass];
     STAssertNotNil(context, @"Created a SplingContext");
 
     NSError *error = nil;
@@ -127,7 +128,7 @@
 
 - (void)testNonBean
 {
-    SplingContext *context = [[SplingContext alloc] initWithBaseClass:baseClass];
+    SplingContextImpl *context = [[SplingContextImpl alloc] initWithBaseClass:baseClass];
     STAssertNotNil(context, @"Created a SplingContext");
     
     NSError *error = nil;
@@ -139,7 +140,7 @@
 
 - (void)testOutsiderBean
 {
-    SplingContext *context = [[SplingContext alloc] initWithBaseClass:baseClass];
+    SplingContextImpl *context = [[SplingContextImpl alloc] initWithBaseClass:baseClass];
     STAssertNotNil(context, @"Created a SplingContext");
     
     NSError *error = nil;
@@ -151,7 +152,7 @@
 
 - (void)testWiredBean
 {
-    SplingContext *context = [[SplingContext alloc] initWithBaseClass:baseClass];
+    SplingContextImpl *context = [[SplingContextImpl alloc] initWithBaseClass:baseClass];
     STAssertNotNil(context, @"Created a SplingContext");
 
     NSError *error = nil;

@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 
 #import "SplingContext.h"
+#import "SplingContextImpl.h"
 #import "Component.h"
 
 @interface SplingTests () {
@@ -57,8 +58,8 @@
 {
     initialised = NO;
     
-    SplingContext *context = [[SplingContext alloc] init];
-    
+    SplingContextImpl *context = [[SplingContextImpl alloc] init];
+
     STAssertNotNil(context, @"Created a SplingContext");
     
     id bean = [context getBeanWithClass:baseClass error:nil];
