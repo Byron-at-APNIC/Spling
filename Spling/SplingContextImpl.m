@@ -15,9 +15,8 @@
 
 @interface SplingContextImpl ()
 
-@property (nonatomic) NSMutableDictionary *beans;
 @property (nonatomic) Class baseClass;
-@property (nonatomic) NSMutableDictionary *classMap;
+@property (nonatomic) NSMutableSet *beans;
 @property (nonatomic) NSMutableDictionary *protocolMap;
 
 - (void)loadAllBeans;
@@ -38,15 +37,14 @@
     if ((self = [super init]) != nil) {
         self.baseClass = base;
         
-        self.beans = [NSMutableDictionary dictionaryWithCapacity:5];
-        self.classMap = [NSMutableDictionary dictionaryWithCapacity:5];
+        self.beans = [NSMutableSet setWithCapacity:5];
         self.protocolMap = [NSMutableDictionary dictionaryWithCapacity:5];
         
         // Load all <Component> classes beneath base
         [self loadAllBeans];
         
         // Autowire all loaded beans with dependencies - may throw an exception
-        [self autowireAllBeans];
+//        [self autowireAllBeans];
     }
 
     return self;
@@ -63,19 +61,11 @@
             if (class_conformsToProtocol(classes[i], @protocol(SFComponent))) {
                 for (Class tester = classes[i]; tester; tester = class_getSuperclass(tester)) {
                     if (tester == self.baseClass) {
-                        NSString *className = [NSString stringWithUTF8String:class_getName(classes[i])];
-                        
-                        // Sanity check: each class should only exist once!
-                        if ([self.beans valueForKey:className] != nil) {
-                            @throw [NSException exceptionWithName:@"Ambiguious bean definition"
-                                                           reason:[NSString stringWithFormat:@"Class name %@ used twice", className]
-                                                         userInfo:nil];
-                        }
-
                         // TODO: factory initialisers?
-                        [self.beans setValue:[[classes[i] alloc] init] forKey:className];
+                        id<NSObject> bean = [[classes[i] alloc] init];
+                        [self.beans addObject:bean];
                         
-                        [self updateMapsWithBean:self.beans[className]];
+                        [self updateMapsWithBean:bean];
                     }
                 }
             }
@@ -86,30 +76,17 @@
 
 - (void)updateMapsWithBean:(NSObject *)bean
 {
-    for (Class class = [bean class]; class; class = class_getSuperclass(class)) {
-        // Update beans by class name
-        NSMutableArray *beans = [self.classMap valueForKey:NSStringFromClass(class)];
-        if (!beans) beans = [NSMutableArray arrayWithCapacity:1];
-        [beans addObject:bean];
-        [self.classMap setValue:beans forKey:NSStringFromClass(class)];
-        
+    for (Class class = [bean class]; class; class = class_getSuperclass(class)) {        
         // Update beans by protocol
         Protocol * __unsafe_unretained *protocols = class_copyProtocolList(class, NULL);
         for (Protocol * __unsafe_unretained *proto = protocols; proto && *proto; proto++) {
-            beans = [self.protocolMap valueForKey:NSStringFromProtocol(*proto)];
+            NSMutableArray *beans = [self.protocolMap valueForKey:NSStringFromProtocol(*proto)];
             if (!beans) beans = [NSMutableArray arrayWithCapacity:1];
             [beans addObject:bean];
             [self.protocolMap setValue:beans forKey:NSStringFromProtocol(*proto)];
         }
         free(protocols);
         
-        // Look at ivars
-        NSLog(@"Class %s ivars", class_getName(class));
-        Ivar *ivars = class_copyIvarList(class, NULL);
-        for (Ivar *ivar = ivars; ivar && *ivar; ivar++) {
-            NSLog(@"  %s = %s", ivar_getName(*ivar), ivar_getTypeEncoding(*ivar));
-        }
-
         // Stop iterating superclasses at the base class
         if (class == self.baseClass) break;
     }
@@ -117,40 +94,25 @@
 
 - (void)autowireAllBeans
 {
-    [self.beans enumerateKeysAndObjectsUsingBlock:^(id key, NSObject *obj, BOOL *stop) {
-        if ([[obj class] respondsToSelector:@selector(autowiredProperties)]) {
-            NSDictionary *autowired = [[obj class] autowiredProperties];
-            [autowired enumerateKeysAndObjectsUsingBlock:^(id key, id class, BOOL *stop) {
-                id bean = [self getBeanWithClass:class error:nil];
-                if (!bean) {
-                    @throw [NSException exceptionWithName:@"Cannot resolve dependency"
-                                                   reason:[NSString stringWithFormat:@"Bean %@, dependency %s",
-                                                           [obj className], class_getName(class)]
-                                                 userInfo:nil];
-                }
-                [obj setValue:bean forKey:key];
-            }];
-        }
-    }];
-}
-
-- (id)getBeanWithClass:(Class)class error:(NSError **)error
-{
-    NSArray *beans = self.classMap[NSStringFromClass(class)];
-    if (!beans) {
-        if (error != nil) {
-            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_UNKNOWN userInfo:nil];
-        }
-        return nil;
-    }
-    if (beans.count > 1) {
-        if (error != nil) {
-            *error = [NSError errorWithDomain:@"org.the-wanderers.Spling" code:CONTEXT_ERROR_AMBIGUOUS userInfo:nil];
-        }
-        return nil;
-    }
+    /*
+     // Look at ivars
+     */
     
-    return beans[0];
+    for (id<SFComponent> bean in self.beans) {
+        Class class = [bean class];
+        NSLog(@"Class %s ivars", class_getName(class));
+        objc_property_t *props = class_copyPropertyList(class, NULL);
+        for (objc_property_t *prop = props; prop && *prop; prop++) {
+            NSArray *attributes = [[NSString stringWithUTF8String:property_getAttributes(*prop)] componentsSeparatedByString:@","];
+            NSLog(@"attributes: %@", attributes);
+        }
+        
+        Ivar *ivars = class_copyIvarList([bean class], NULL);
+        for (Ivar *ivar = ivars; ivar && *ivar; ivar++) {
+            const char *typeEncoding = ivar_getTypeEncoding(*ivar);
+            NSLog(@"type encoding: %s", typeEncoding);
+        }
+    }
 }
 
 - (id)getBeanWithProtocol:(Protocol *)proto error:(NSError *__autoreleasing *)error

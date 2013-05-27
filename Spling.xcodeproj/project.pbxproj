@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3023489A1749CB94003737C3 /* SplingBeansByProtocolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 302348991749CB94003737C3 /* SplingBeansByProtocolTests.m */; };
+		309FFAB21753869F00A47123 /* SFAutowire.h in Headers */ = {isa = PBXBuildFile; fileRef = 309FFAAD17537DAC00A47123 /* SFAutowire.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		309FFAB31753869F00A47123 /* SFBeanFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 30BCEE14174467B500434D91 /* SFBeanFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		309FFAB41753869F00A47123 /* SFComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 30BCEE13174466BF00434D91 /* SFComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		309FFAB51753869F00A47123 /* SFSplingContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 30721123174714AE007481D1 /* SFSplingContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30BCEDE71744669400434D91 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE61744669400434D91 /* Cocoa.framework */; };
 		30BCEDF11744669400434D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30BCEDEF1744669400434D91 /* InfoPlist.strings */; };
 		30BCEDFD1744669500434D91 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDFC1744669500434D91 /* SenTestingKit.framework */; };
@@ -15,7 +19,7 @@
 		30BCEE011744669500434D91 /* Spling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30BCEDE31744669400434D91 /* Spling.framework */; };
 		30BCEE071744669500434D91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30BCEE051744669500434D91 /* InfoPlist.strings */; };
 		30BCEE0A1744669500434D91 /* SplingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BCEE091744669500434D91 /* SplingTests.m */; };
-		30BCEE1717446B2700434D91 /* SplingContextImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 30BCEE1517446B2700434D91 /* SplingContextImpl.h */; };
+		30BCEE1717446B2700434D91 /* SplingContextImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 30BCEE1517446B2700434D91 /* SplingContextImpl.h */; settings = {ATTRIBUTES = (); }; };
 		30BCEE1817446B2700434D91 /* SplingContextImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BCEE1617446B2700434D91 /* SplingContextImpl.m */; };
 		30EC595C17447DFE00454A72 /* SplingContextTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 30EC595B17447DFE00454A72 /* SplingContextTests.m */; };
 /* End PBXBuildFile section */
@@ -34,6 +38,7 @@
 		302348981749CB94003737C3 /* SplingBeansByProtocolTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplingBeansByProtocolTests.h; sourceTree = "<group>"; };
 		302348991749CB94003737C3 /* SplingBeansByProtocolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplingBeansByProtocolTests.m; sourceTree = "<group>"; };
 		30721123174714AE007481D1 /* SFSplingContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSplingContext.h; sourceTree = "<group>"; };
+		309FFAAD17537DAC00A47123 /* SFAutowire.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFAutowire.h; sourceTree = "<group>"; };
 		30BCEDE31744669400434D91 /* Spling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BCEDE61744669400434D91 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		30BCEDE91744669400434D91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -120,8 +125,9 @@
 		30BCEDEC1744669400434D91 /* Spling */ = {
 			isa = PBXGroup;
 			children = (
-				30BCEE13174466BF00434D91 /* SFComponent.h */,
+				309FFAAD17537DAC00A47123 /* SFAutowire.h */,
 				30BCEE14174467B500434D91 /* SFBeanFactory.h */,
+				30BCEE13174466BF00434D91 /* SFComponent.h */,
 				30721123174714AE007481D1 /* SFSplingContext.h */,
 				30BCEE1517446B2700434D91 /* SplingContextImpl.h */,
 				30BCEE1617446B2700434D91 /* SplingContextImpl.m */,
@@ -170,6 +176,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				309FFAB21753869F00A47123 /* SFAutowire.h in Headers */,
+				309FFAB31753869F00A47123 /* SFBeanFactory.h in Headers */,
+				309FFAB41753869F00A47123 /* SFComponent.h in Headers */,
+				309FFAB51753869F00A47123 /* SFSplingContext.h in Headers */,
 				30BCEE1717446B2700434D91 /* SplingContextImpl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

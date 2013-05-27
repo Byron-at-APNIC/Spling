@@ -7,6 +7,7 @@
 //
 
 #import "SplingBeansByProtocolTests.h"
+#import "SFAutowire.h"
 #import "SFComponent.h"
 #import "SplingContextImpl.h"
 
@@ -14,9 +15,13 @@
 @protocol Lists <NSObject> @end
 
 @interface SplingContextByProtocol : NSObject <SFComponent, FindMe>
-@property (strong, nonatomic) id<FindMe> me;
-@property (strong, nonatomic) NSArray<Lists> *thee;
-@end @implementation SplingContextByProtocol @end
+
+@property (strong, nonatomic) id<SFAutowire, FindMe> me;
+@property (strong, nonatomic) NSArray<SFAutowire, Lists> *thee;
+
+@end
+
+@implementation SplingContextByProtocol @end
 
 @implementation SplingBeansByProtocolTests
 
