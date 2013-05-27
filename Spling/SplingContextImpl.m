@@ -11,7 +11,7 @@
 #import <Foundation/NSObjCRuntime.h>
 #import <objc/runtime.h>
 
-#import "Component.h"
+#import "SFComponent.h"
 
 @interface SplingContextImpl ()
 
@@ -60,7 +60,7 @@
         Class *classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * classCount);
         classCount = objc_getClassList(classes, classCount);
         for (int i = 0; i < classCount; i++) {
-            if (class_conformsToProtocol(classes[i], @protocol(Component))) {
+            if (class_conformsToProtocol(classes[i], @protocol(SFComponent))) {
                 for (Class tester = classes[i]; tester; tester = class_getSuperclass(tester)) {
                     if (tester == self.baseClass) {
                         NSString *className = [NSString stringWithUTF8String:class_getName(classes[i])];
@@ -102,6 +102,13 @@
             [self.protocolMap setValue:beans forKey:NSStringFromProtocol(*proto)];
         }
         free(protocols);
+        
+        // Look at ivars
+        NSLog(@"Class %s ivars", class_getName(class));
+        Ivar *ivars = class_copyIvarList(class, NULL);
+        for (Ivar *ivar = ivars; ivar && *ivar; ivar++) {
+            NSLog(@"  %s = %s", ivar_getName(*ivar), ivar_getTypeEncoding(*ivar));
+        }
 
         // Stop iterating superclasses at the base class
         if (class == self.baseClass) break;

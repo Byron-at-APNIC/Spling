@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SplingContext.h"
+#import "SFSplingContext.h"
 
 #define CONTEXT_ERROR_AMBIGUOUS ((NSInteger)-1)
 #define CONTEXT_ERROR_UNKNOWN ((NSInteger)-2)
 
-@interface SplingContextImpl : NSObject <SplingContext>
+@interface SplingContextImpl : NSObject <SFSplingContext>
 
 - (id)init;
 - (id)initWithBaseClass:(Class)base;

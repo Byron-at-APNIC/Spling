@@ -31,9 +31,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		30721123174714AE007481D1 /* SplingContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplingContext.h; sourceTree = "<group>"; };
 		302348981749CB94003737C3 /* SplingBeansByProtocolTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplingBeansByProtocolTests.h; sourceTree = "<group>"; };
 		302348991749CB94003737C3 /* SplingBeansByProtocolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplingBeansByProtocolTests.m; sourceTree = "<group>"; };
+		30721123174714AE007481D1 /* SFSplingContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSplingContext.h; sourceTree = "<group>"; };
 		30BCEDE31744669400434D91 /* Spling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Spling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BCEDE61744669400434D91 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		30BCEDE91744669400434D91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -48,8 +48,8 @@
 		30BCEE061744669500434D91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30BCEE081744669500434D91 /* SplingTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplingTests.h; sourceTree = "<group>"; };
 		30BCEE091744669500434D91 /* SplingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SplingTests.m; sourceTree = "<group>"; };
-		30BCEE13174466BF00434D91 /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
-		30BCEE14174467B500434D91 /* BeanFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeanFactory.h; sourceTree = "<group>"; };
+		30BCEE13174466BF00434D91 /* SFComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFComponent.h; sourceTree = "<group>"; };
+		30BCEE14174467B500434D91 /* SFBeanFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFBeanFactory.h; sourceTree = "<group>"; };
 		30BCEE1517446B2700434D91 /* SplingContextImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplingContextImpl.h; sourceTree = "<group>"; };
 		30BCEE1617446B2700434D91 /* SplingContextImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplingContextImpl.m; sourceTree = "<group>"; };
 		30EC595A17447DFE00454A72 /* SplingContextTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplingContextTests.h; sourceTree = "<group>"; };
@@ -120,9 +120,9 @@
 		30BCEDEC1744669400434D91 /* Spling */ = {
 			isa = PBXGroup;
 			children = (
-				30BCEE13174466BF00434D91 /* Component.h */,
-				30BCEE14174467B500434D91 /* BeanFactory.h */,
-				30721123174714AE007481D1 /* SplingContext.h */,
+				30BCEE13174466BF00434D91 /* SFComponent.h */,
+				30BCEE14174467B500434D91 /* SFBeanFactory.h */,
+				30721123174714AE007481D1 /* SFSplingContext.h */,
 				30BCEE1517446B2700434D91 /* SplingContextImpl.h */,
 				30BCEE1617446B2700434D91 /* SplingContextImpl.m */,
 				30BCEDED1744669400434D91 /* Supporting Files */,

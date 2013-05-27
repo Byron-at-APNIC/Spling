@@ -1,5 +1,5 @@
 //
-//  SplingContext.h
+//  SFSplingContext.h
 //  Spling
 //
 //  Created by Byron Ellacott on 18/05/13.
@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BeanFactory.h"
+#import "SFBeanFactory.h"
 
-@protocol SplingContext <NSObject, BeanFactory>
+@protocol SFSplingContext <NSObject, SFBeanFactory>
 
 - (id)init;
 - (id)initWithBaseClass:(Class)base;

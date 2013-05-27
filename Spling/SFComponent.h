@@ -1,5 +1,5 @@
 //
-//  Component.h
+//  SFComponent.h
 //  Spling
 //
 //  Created by Byron Ellacott on 16/05/13.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol Component
+@protocol SFComponent
 
 @optional
 + (NSDictionary *)autowiredProperties;

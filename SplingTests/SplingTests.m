@@ -10,9 +10,9 @@
 
 #import <objc/runtime.h>
 
-#import "SplingContext.h"
+#import "SFSplingContext.h"
 #import "SplingContextImpl.h"
-#import "Component.h"
+#import "SFComponent.h"
 
 @interface SplingTests () {
     Class baseClass;
@@ -37,7 +37,7 @@
     
     testComponentClass = objc_allocateClassPair(baseClass, "SplingTestsComponent", 0);
     assert(testComponentClass != NULL);
-    assert(class_addProtocol(testComponentClass, @protocol(Component)));
+    assert(class_addProtocol(testComponentClass, @protocol(SFComponent)));
     assert(class_addMethod(testComponentClass, @selector(init), imp_implementationWithBlock(^(id _self) {
         IMP parentImp = class_getMethodImplementation(baseClass, @selector(init));
         id newself = parentImp(_self, @selector(init));

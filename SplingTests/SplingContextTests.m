@@ -10,13 +10,13 @@
 
 #import <objc/runtime.h>
 
-#import "SplingContext.h"
+#import "SFSplingContext.h"
 #import "SplingContextImpl.h"
-#import "Component.h"
+#import "SFComponent.h"
 
 @interface SplingContextTestsCircularBase : NSObject @end @implementation SplingContextTestsCircularBase @end
-@interface SplingContextTestsHead : SplingContextTestsCircularBase <Component> @property (strong) id tail; @end
-@interface SplingContextTestsTail : SplingContextTestsCircularBase <Component> @property (strong) id head; @end
+@interface SplingContextTestsHead : SplingContextTestsCircularBase <SFComponent> @property (strong) id tail; @end
+@interface SplingContextTestsTail : SplingContextTestsCircularBase <SFComponent> @property (strong) id head; @end
 
 @implementation SplingContextTestsHead
 + (id)autowiredProperties {return @{@"tail": [SplingContextTestsTail class]};}
@@ -62,17 +62,17 @@
     
     firstComponentClass = objc_allocateClassPair(baseClass, "SplingContextFirstComponent", 0);
     assert(firstComponentClass != NULL);
-    assert(class_addProtocol(firstComponentClass, @protocol(Component)));
+    assert(class_addProtocol(firstComponentClass, @protocol(SFComponent)));
     objc_registerClassPair(firstComponentClass);
     
     secondComponentClass = objc_allocateClassPair(baseClass, "SplingContextSecondComponent", 0);
     assert(secondComponentClass != NULL);
-    assert(class_addProtocol(secondComponentClass, @protocol(Component)));
+    assert(class_addProtocol(secondComponentClass, @protocol(SFComponent)));
     objc_registerClassPair(secondComponentClass);
 
     outsiderComponentClass = objc_allocateClassPair([NSObject class], "SplingContextOutsiderComponent", 0);
     assert(outsiderComponentClass != NULL);
-    assert(class_addProtocol(outsiderComponentClass, @protocol(Component)));
+    assert(class_addProtocol(outsiderComponentClass, @protocol(SFComponent)));
     objc_registerClassPair(outsiderComponentClass);
     
     // Define a property to go on the wired component
@@ -86,7 +86,7 @@
     
     wiredComponentClass = objc_allocateClassPair(baseClass, "SplingContextWiredComponent", 0);
     assert(wiredComponentClass != NULL);
-    assert(class_addProtocol(wiredComponentClass, @protocol(Component)));
+    assert(class_addProtocol(wiredComponentClass, @protocol(SFComponent)));
     assert([self addIvar:"_firstComponent" ofTypeEncoding:@encode(id) toClass:wiredComponentClass]);
     assert(class_addMethod(wiredComponentClass, @selector(getFirstComponent), imp_implementationWithBlock(^(id _self) {
         Ivar ivar = class_getInstanceVariable([_self class], "_firstComponent");

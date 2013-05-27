@@ -1,5 +1,5 @@
 //
-//  BeanFactory.h
+//  SFBeanFactory.h
 //  Spling
 //
 //  Created by Byron Ellacott on 16/05/13.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol BeanFactory <NSObject>
+@protocol SFBeanFactory <NSObject>
 
 - (id)getBeanWithClass:(Class)class error:(NSError **)error;
 - (id)getBeanWithProtocol:(Protocol *)proto error:(NSError **)error;

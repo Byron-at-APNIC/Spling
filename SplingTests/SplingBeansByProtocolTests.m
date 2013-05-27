@@ -7,12 +7,16 @@
 //
 
 #import "SplingBeansByProtocolTests.h"
-#import "Component.h"
+#import "SFComponent.h"
 #import "SplingContextImpl.h"
 
 @protocol FindMe <NSObject> @end
+@protocol Lists <NSObject> @end
 
-@interface SplingContextByProtocol : NSObject <Component, FindMe> @end @implementation SplingContextByProtocol @end
+@interface SplingContextByProtocol : NSObject <SFComponent, FindMe>
+@property (strong, nonatomic) id<FindMe> me;
+@property (strong, nonatomic) NSArray<Lists> *thee;
+@end @implementation SplingContextByProtocol @end
 
 @implementation SplingBeansByProtocolTests
 
