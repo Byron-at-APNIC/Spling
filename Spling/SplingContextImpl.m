@@ -44,7 +44,7 @@
         [self loadAllBeans];
         
         // Autowire all loaded beans with dependencies - may throw an exception
-//        [self autowireAllBeans];
+        [self autowireAllBeans];
     }
 
     return self;
@@ -94,23 +94,51 @@
 
 - (void)autowireAllBeans
 {
-    /*
-     // Look at ivars
-     */
-    
-    for (id<SFComponent> bean in self.beans) {
+    for (NSObject<SFComponent> *bean in self.beans) {
         Class class = [bean class];
-        NSLog(@"Class %s ivars", class_getName(class));
         objc_property_t *props = class_copyPropertyList(class, NULL);
         for (objc_property_t *prop = props; prop && *prop; prop++) {
             NSArray *attributes = [[NSString stringWithUTF8String:property_getAttributes(*prop)] componentsSeparatedByString:@","];
-            NSLog(@"attributes: %@", attributes);
-        }
-        
-        Ivar *ivars = class_copyIvarList([bean class], NULL);
-        for (Ivar *ivar = ivars; ivar && *ivar; ivar++) {
-            const char *typeEncoding = ivar_getTypeEncoding(*ivar);
-            NSLog(@"type encoding: %s", typeEncoding);
+            
+            if ([attributes containsObject:@"R"]) continue; // read-only property, skip it
+            
+            NSString *ivarname = [attributes lastObject];
+            if (![ivarname hasPrefix:@"V"]) continue; // last attribute should be V<ivar name>
+            
+            ivarname = [ivarname substringFromIndex:1];
+            Ivar ivar = class_getInstanceVariable(class, [ivarname UTF8String]);
+            NSString *ivarType = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];
+            
+            if (![ivarType hasPrefix:@"@\""]) continue; // ivar type must start with @ for object, and must have further type information
+            
+            if ([ivarType rangeOfString:@"<SFAutowire>"].location == NSNotFound) continue; // must conform to SFAutowire protocol
+
+            ivarType = [ivarType stringByReplacingOccurrencesOfString:@"<SFAutowire>" withString:@""];
+
+            // Strip off the @""
+            ivarType = [ivarType substringWithRange:NSMakeRange(2, [ivarType length] - 3)];
+
+            // Split around <
+            NSArray *parts = [ivarType componentsSeparatedByString:@"<"];
+
+            if ([parts count] != 2) continue; // must be one class name (maybe empty) and one protocol left
+            
+            // Get the candidates
+            NSString *proto = [parts[1] substringToIndex:[parts[1] length] - 1];
+            NSArray *candidates = [self.protocolMap valueForKey:proto];
+            if (!candidates) continue;  // or error?
+            
+            NSString *propName = [NSString stringWithUTF8String:property_getName(*prop)];
+
+            NSString *beanType = parts[0];
+            if ([beanType isEqualToString:@""]) {
+                if ([candidates count] != 1) continue;  // or error?
+                [bean setValue:candidates[0] forKey:propName];
+            } else if ([beanType isEqualToString:@"NSArray"]) {
+                [bean setValue:candidates forKey:propName];
+            } else if ([beanType isEqualToString:@"NSSet"]) {
+                [bean setValue:[NSSet setWithArray:candidates] forKey:propName];
+            }
         }
     }
 }
